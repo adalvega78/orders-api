@@ -6,8 +6,7 @@ import * as hpp from 'hpp';
 import * as logger from 'morgan';
 import Routes from './interfaces/routes.interface';
 import errorMiddleware from './middlewares/error.middleware';
-import * as mongoose from 'mongoose';
-import * as bluebird from 'bluebird';
+import DbClient from './repositories/helpers/dbClient';
 
 class App {
   public app: express.Application;
@@ -63,18 +62,7 @@ class App {
 
   private initializeDatabase() {
     // Connect to MongoDB
-    const mongoUrl = process.env.MONGODB_URI;
-    (<any>mongoose).Promise = bluebird;
-    mongoose.connect(mongoUrl, {
-      useUnifiedTopology: true,
-      useNewUrlParser: true,
-      useCreateIndex: true
-    }).then(() => { /** ready to use. The `mongoose.connect()` promise resolves to undefined. */
-    },
-    ).catch(err => {
-      console.log('MongoDB connection error. Please make sure MongoDB is running. ' + err);
-      // process.exit();
-    });
+    DbClient.connect();
   }
 
 }
