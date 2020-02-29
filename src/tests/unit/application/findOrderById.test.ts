@@ -1,9 +1,10 @@
 import FindOrderById from '../../../application/usecases/orders/findOrderById';
+import GetOrderById from '../../../queries/interfaces/getOrderById';
 import OrderDto from '../../../application/usecases/orders/dto/orderDto';
 import OrderDetailDto from '../../../application/usecases/orders/dto/orderDetailDto';
-import FindOrderByIdAction from '../../../business/actions/orders/findOrderById';
 import Order from '../../../queries/models/order';
 import OrderDetail from '../../../queries/models/orderDetail';
+import { mock } from 'jest-mock-extended';
 
 describe('findOrderById', () => {
 
@@ -32,15 +33,15 @@ describe('findOrderById', () => {
   }
 
   it('get order matching with id', async() => {
-    let action = new FindOrderByIdAction(null);
     const anOrderId = "anOrderId";
-    let findOrderById = new FindOrderById(action);
-    spyOn(action, "execute").and.callFake(async() => getAnExistingOrderWith(anOrderId));
+    const query = mock<GetOrderById>();
+    query.execute.mockReturnValue(Promise.resolve(getAnExistingOrderWith(anOrderId)));
+    let findOrderById = new FindOrderById(query);
     let expectedOrder = toDto(getAnExistingOrderWith(anOrderId));
 
     let order = await findOrderById.execute(anOrderId);
 
     expect(order).toMatchObject(expectedOrder);
-    expect(action.execute).toHaveBeenCalledWith(anOrderId);
+    expect(query.execute).toHaveBeenCalledWith(anOrderId);    
   });
 });

@@ -1,5 +1,5 @@
 import Order from '../../../queries/models/order';
-import GetOrderById from '../../../queries/getOrderById';
+import GetOrderById from '../../../queries/interfaces/getOrderById';
 
 class FindOrderById {
   getOrderById: GetOrderById;

@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import OrderDto from '../application/usecases/orders/dto/orderDto';
 import FindOrderById from '../application/usecases/orders/findOrderById';
 import FindOrderByIdAction from '../business/actions/orders/findOrderById';
-import GetOrderByIdQuery from '../queries/getOrderByIdQuery';
+import GetOrderByIdQuery from '../queries/actions/getOrderByIdQuery';
 
 class OrdersController {
 
@@ -13,10 +13,15 @@ class OrdersController {
       let query = new GetOrderByIdQuery();
       let action = new FindOrderByIdAction(query);
       let findOrderById = new FindOrderById(action);
-      const findOneOrderData: OrderDto = await findOrderById.execute(orderId);
-      res.status(200).json({ data: findOneOrderData, message: 'findOne' });
-    } catch (error) {
-      next(error);
+      await findOrderById.execute(orderId)
+      .then(function(order: OrderDto) {
+        res.status(200).json({ data: order, message: 'findOne' });
+      })
+      .catch(function(err) {
+        res.status(404).json({ data: err, message: err.message });
+      });
+    } catch(error) {
+      next(error)
     }
   }
 

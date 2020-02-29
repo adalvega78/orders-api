@@ -5,7 +5,7 @@ import Route from '../interfaces/routes.interface';
 import validationMiddleware from '../middlewares/validation.middleware';
 
 class OrdersRoute implements Route {
-  public path = '/users';
+  public path = '/orders';
   public router = Router();
   public ordersController = new OrdersController();
 
