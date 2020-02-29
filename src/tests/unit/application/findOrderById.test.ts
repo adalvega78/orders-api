@@ -1,9 +1,9 @@
-import FindOrderById from '../../application/usecases/orders/findOrderById';
-import OrderDto from '../../application/usecases/orders/dto/orderDto';
-import OrderDetailDto from '../../application/usecases/orders/dto/orderDetailDto';
-import FindOrderByIdAction from '../../business/actions/orders/findOrderById';
-import Order from '../../business/models/order';
-import OrderDetail from 'business/models/orderDetail';
+import FindOrderById from '../../../application/usecases/orders/findOrderById';
+import OrderDto from '../../../application/usecases/orders/dto/orderDto';
+import OrderDetailDto from '../../../application/usecases/orders/dto/orderDetailDto';
+import FindOrderByIdAction from '../../../business/actions/orders/findOrderById';
+import Order from '../../../queries/models/order';
+import OrderDetail from '../../../queries/models/orderDetail';
 
 describe('findOrderById', () => {
 
@@ -32,7 +32,7 @@ describe('findOrderById', () => {
   }
 
   it('get order matching with id', async() => {
-    let action = new FindOrderByIdAction();
+    let action = new FindOrderByIdAction(null);
     const anOrderId = "anOrderId";
     let findOrderById = new FindOrderById(action);
     spyOn(action, "execute").and.callFake(async() => getAnExistingOrderWith(anOrderId));

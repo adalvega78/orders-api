@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import OrderDto from '../application/usecases/orders/dto/orderDto';
 import FindOrderById from '../application/usecases/orders/findOrderById';
 import FindOrderByIdAction from '../business/actions/orders/findOrderById';
+import GetOrderByIdQuery from '../queries/getOrderById';
 
 class OrdersController {
 
@@ -9,6 +10,7 @@ class OrdersController {
     const orderId: string = req.params.id;
 
     try {
+      // let query = new GetOrderByIdQuery();
       let action = new FindOrderByIdAction();
       let findOrderById = new FindOrderById(action);
       const findOneOrderData: OrderDto = await findOrderById.execute(orderId);

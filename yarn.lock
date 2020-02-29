@@ -2785,6 +2785,13 @@ jest-message-util@^25.1.0:
     slash "^3.0.0"
     stack-utils "^1.0.1"
 
+jest-mock-extended@^1.0.8:
+  version "1.0.8"
+  resolved "https://www.myget.org/F/aidacanarias/npm/jest-mock-extended/-/jest-mock-extended-1.0.8.tgz#af6cccf78c7ef0c9a0b5fbae4e2625a792f0d6b8"
+  integrity sha1-r2zM94x+8MmgtfuuTiYlp5Lw1rg=
+  dependencies:
+    ts-essentials "^4.0.0"
+
 jest-mock@^25.1.0:
   version "25.1.0"
   resolved "https://www.myget.org/F/aidacanarias/npm/jest-mock/-/jest-mock-25.1.0.tgz#411d549e1b326b7350b2e97303a64715c28615fd"
@@ -4677,6 +4684,11 @@ tr46@^1.0.1:
   integrity sha1-qLE/1r/SSJUZZ0zN5VujaTtwbQk=
   dependencies:
     punycode "^2.1.0"
+
+ts-essentials@^4.0.0:
+  version "4.0.0"
+  resolved "https://www.myget.org/F/aidacanarias/npm/ts-essentials/-/ts-essentials-4.0.0.tgz#506c42b270bbd0465574b90416533175b09205ab"
+  integrity sha1-UGxCsnC70EZVdLkEFlMxdbCSBas=
 
 ts-jest@^25.2.1:
   version "25.2.1"

@@ -1,5 +1,4 @@
 import OrderDetailDto from './orderDetailDto';
-
 class OrderDto {
   id: string;
   customerId: string;
