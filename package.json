@@ -11,7 +11,10 @@
     "lint": "tslint -p tsconfig.json -c tslint.json"
   },
   "dependencies": {
+    "@types/bluebird": "^3.5.29",
+    "@types/mongoose": "^5.7.3",
     "bcrypt": "^4.0.0",
+    "bluebird": "^3.7.2",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.11.0",
     "cookie-parser": "^1.4.4",
@@ -24,6 +27,7 @@
     "hpp": "^0.2.3",
     "jest": "^25.1.0",
     "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.2",
     "morgan": "^1.9.1",
     "ts-jest": "^25.2.1",
     "ts-node": "^8.6.2",

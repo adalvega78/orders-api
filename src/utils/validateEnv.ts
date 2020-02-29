@@ -5,6 +5,7 @@ function validateEnv() {
     NODE_ENV: str(),
     JWT_SECRET: str(),
     PORT: port(),
+    MONGODB_URI: str()
   });
 }
 
