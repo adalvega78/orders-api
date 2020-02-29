@@ -1,7 +1,7 @@
 import GetOrderById from '../../../queries/actions/getOrderByIdQuery';
+import Order from '../../../business/models/order';
 import OrderDto from './dto/orderDto'
 import OrderDetailDto from './dto/orderDetailDto';
-import GetOrderByIdQuery from 'queries/actions/getOrderByIdQuery';
 
 class FindOrderById {
   query: GetOrderById;
@@ -10,19 +10,21 @@ class FindOrderById {
     this.query = query;
   }
   public async execute(orderId: string): Promise<OrderDto> {
-    let order = await this.query.execute(orderId);
-    return <OrderDto>{
-      id: order.id,
-      customerId: order.customerId,
-      details: order.details.map((x) => {
-        return <OrderDetailDto>{
-          productid: x.productid,
-          quantity: x.quantity,
-          price: x.price
+    return await this.query.execute(orderId)
+      .then((order: Order) => {
+        return <OrderDto>{
+          id: order.id,
+          customerId: order.customerId,
+          details: order.details.map((x) => {
+            return <OrderDetailDto>{
+              productId: x.productId,
+              quantity: x.quantity,
+              price: x.price
+            }
+          }),
+          total: order.total
         }
-      }),
-      total: order.total
-    }
+      });
   }
 }
 

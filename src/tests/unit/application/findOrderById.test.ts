@@ -2,8 +2,8 @@ import FindOrderById from '../../../application/usecases/orders/findOrderById';
 import GetOrderById from '../../../queries/interfaces/getOrderById';
 import OrderDto from '../../../application/usecases/orders/dto/orderDto';
 import OrderDetailDto from '../../../application/usecases/orders/dto/orderDetailDto';
-import Order from '../../../queries/models/order';
-import OrderDetail from '../../../queries/models/orderDetail';
+import Order from '../../../business/models/order';
+import OrderDetail from '../../../business/models/orderDetail';
 import { mock } from 'jest-mock-extended';
 
 describe('findOrderById', () => {
@@ -26,13 +26,13 @@ describe('findOrderById', () => {
         return <OrderDetailDto> {
           quantity: x.quantity,
           price: x.price,
-          productid: x.productid
+          productId: x.productId
         }
       })
     }
   }
 
-  it('get order matching with id', async() => {
+  it('gets order matching with id', async() => {
     const anOrderId = "anOrderId";
     const query = mock<GetOrderById>();
     query.execute.mockReturnValue(Promise.resolve(getAnExistingOrderWith(anOrderId)));
@@ -44,4 +44,5 @@ describe('findOrderById', () => {
     expect(order).toMatchObject(expectedOrder);
     expect(query.execute).toHaveBeenCalledWith(anOrderId);    
   });
+
 });

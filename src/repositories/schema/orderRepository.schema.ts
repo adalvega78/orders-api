@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose';
 import Order from '../../business/models/order';
 
 export type OrderDetailType = mongoose.Document & {
-  productid: string;
+  productId: string;
   quantity: number;
   price: number;
   position: number;

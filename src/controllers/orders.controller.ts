@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import OrderDto from '../application/usecases/orders/dto/orderDto';
-import FindOrderById from '../application/usecases/orders/findOrderById';
-import FindOrderByIdAction from '../business/actions/orders/findOrderById';
-import GetOrderByIdQuery from '../queries/actions/getOrderByIdQuery';
+import ActionsFactory from './actionsFactory';
 
 class OrdersController {
 
@@ -10,14 +8,12 @@ class OrdersController {
     const orderId: string = req.params.id;
 
     try {
-      let query = new GetOrderByIdQuery();
-      let action = new FindOrderByIdAction(query);
-      let findOrderById = new FindOrderById(action);
+      let findOrderById = ActionsFactory.FindByOrderId();
       await findOrderById.execute(orderId)
       .then(function(order: OrderDto) {
         res.status(200).json({ data: order, message: 'findOne' });
       })
-      .catch(function(err) {
+      .catch(function(err: Error) {
         res.status(404).json({ data: err, message: err.message });
       });
     } catch(error) {

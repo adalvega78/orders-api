@@ -1,5 +1,5 @@
 export default interface OrderDetail {
-  productid: string;
+  productId: string;
   quantity: number;
   price: number;
 }
