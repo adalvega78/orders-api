@@ -1,8 +1,8 @@
 import 'dotenv/config';
 import App from './app';
-import IndexRoute from './routes/index.route';
+import IndexRoute from './api/routes/index.route';
 import validateEnv from './utils/validateEnv';
-import OrdersRoute from './routes/orders.route';
+import OrdersRoute from './api/routes/orders.route';
 
 validateEnv();
 

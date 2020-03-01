@@ -4,9 +4,9 @@ import * as express from 'express';
 import * as helmet from 'helmet';
 import * as hpp from 'hpp';
 import * as logger from 'morgan';
-import Routes from './interfaces/routes.interface';
-import errorMiddleware from './middlewares/error.middleware';
-import DbClient from './repositories/helpers/dbClient';
+import Routes from './api/routes/interfaces/routes.interface';
+import errorMiddleware from './api/middlewares/error.middleware';
+import DbClient from './persistence/helpers/dbClient';
 
 class App {
   public app: express.Application;
@@ -62,7 +62,9 @@ class App {
 
   private initializeDatabase() {
     // Connect to MongoDB
-    DbClient.connect();
+    if (this.env) {
+      DbClient.connect();
+    }
   }
 
 }
