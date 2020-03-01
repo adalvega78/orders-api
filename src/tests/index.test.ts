@@ -1,7 +1,6 @@
 import * as request from 'supertest';
 import App from '../app';
 import IndexRoute from '../api/routes/index.route';
-import DbClient from '../persistence/helpers/dbClient';
 
 afterAll(async () => {
   await new Promise(resolve => setTimeout(() => resolve(), 500));

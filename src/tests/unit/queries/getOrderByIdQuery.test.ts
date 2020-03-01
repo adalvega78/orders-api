@@ -5,6 +5,7 @@ import DbClient from '../../../persistence/helpers/dbClient';
 import { Db } from "mongodb";
 import GetOrderByIdQuery from '../../../queries/orders/getOrderByIdQuery';
 import OrderNotFoundException from '../../../queries/orders/exceptions/orderNotFoundException';
+import FakeDbClient from '../../helpers/fakeDbClient';
 
 describe('getOrderByIdQuery', () => {
 
@@ -20,7 +21,7 @@ describe('getOrderByIdQuery', () => {
   it('gets order matching with id', async () => {
     const anOrderId = "anOrderId";
     const expectedOrder = getAnExistingOrderWith(anOrderId);
-    givenADbClientThatReturns(Promise.resolve(expectedOrder))
+    FakeDbClient.FindOneReturns<Order>(Promise.resolve(expectedOrder));
     const getOrderByIdQuery = new GetOrderByIdQuery();
 
     const order = await getOrderByIdQuery.execute(anOrderId);
@@ -30,26 +31,14 @@ describe('getOrderByIdQuery', () => {
 
   it('throws an exception when not exists the order with id', async () => {
     const anOrderId = "anOrderId";
-    givenADbClientThatReturns(Promise.reject(new OrderNotFoundException("not found")));
+    FakeDbClient.FindOneReturns<Order>(Promise.reject(new OrderNotFoundException("not found")));
     const getOrderByIdQuery = new GetOrderByIdQuery();
 
     await getOrderByIdQuery.execute(anOrderId)
       .catch((error: OrderNotFoundException) => {
         expect(error.message).toBe("not found");
-      } );
+      });
 
   });
 
 });
-
-function givenADbClientThatReturns(promise: Promise<Order>) {
-  DbClient.connect = jest.fn();
-  DbClient.db = mock<Db>();
-  DbClient.db.collection = jest.fn().mockImplementation(() => {
-    return {
-      findOne: jest.fn((args) => {
-        return promise;
-      })
-    };
-  });
-}
