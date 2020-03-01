@@ -1,4 +1,4 @@
-import CreateOrderCommand from './createOrderCommand';
+import { CreateOrderCommand } from './createOrderCommand';
 import OrderRepository from '../repositories/orderRepository';
 import Orders from '../models/orders';
 

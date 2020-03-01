@@ -1,5 +1,5 @@
 import OrderDetail from './orderDetail';
-import CreateOrderCommand from '../commands/createOrderCommand';
+import { CreateOrderCommand } from '../commands/createOrderCommand';
 import Order from './order';
 import Guid from '../../../utils/guid';
 

@@ -1,4 +1,4 @@
-export default interface CreateOrderCommand {
+export interface CreateOrderCommand {
   customerId: string;
   details: Array<CreateOrderDetailCommand>;
   total: number;

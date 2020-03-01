@@ -5,7 +5,7 @@ import OrderDetail from '../../../queries/orders/models/orderDetailQuery';
 import { mock } from 'jest-mock-extended';
 import OrderNotFoundException from '../../../queries/orders/exceptions/orderNotFoundException';
 
-describe('findOrderById', () => {
+describe('findOrderById should', () => {
 
   function getAnExistingOrderWith(orderId: string): Order {
     return <Order> { 

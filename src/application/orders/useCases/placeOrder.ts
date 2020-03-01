@@ -1,5 +1,5 @@
 import CreateOrderCommandHandler from '../../../business/orders/commands/createOrderCommandHandler';
-import CreateOrderCommand from '../../../business/orders/commands/createOrderCommand';
+import { CreateOrderCommand } from '../../../business/orders/commands/createOrderCommand';
 
 class PlaceOrder {
   commandHandler: CreateOrderCommandHandler;
