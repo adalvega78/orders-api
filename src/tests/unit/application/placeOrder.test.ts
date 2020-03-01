@@ -18,7 +18,7 @@ describe('placeOrder should', () => {
     };
   }
 
-  it('save place order', async() => {
+  it('places the new order', async() => {
     const newOrderId = "anOrderId";
     const commandHandler = mock<CreateOrderCommandHandler>();
     const command = getANewOrderCommand();
