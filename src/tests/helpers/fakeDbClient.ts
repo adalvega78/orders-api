@@ -3,7 +3,6 @@ import { Db } from "mongodb";
 import { mock } from 'jest-mock-extended';
 
 export default class FakeDbClient<T> {
-
   static FindOneReturns<T>(promise: Promise<T>) {
     DbClient.connect = jest.fn();
     DbClient.db = mock<Db>();
@@ -15,4 +14,17 @@ export default class FakeDbClient<T> {
       };
     });
   }
+  static InsertOneReturns<T>(promise: Promise<boolean>) {
+    DbClient.connect = jest.fn();
+    DbClient.db = mock<Db>();
+    DbClient.db.collection = jest.fn().mockImplementation(() => {
+      return {
+        insertOne: jest.fn((args) => {
+          return promise;
+        })
+      };
+    });
+  }
+
+
 }

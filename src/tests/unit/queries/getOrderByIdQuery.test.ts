@@ -1,8 +1,5 @@
 import Order from '../../../queries/orders/models/orderQuery';
 import OrderDetail from '../../../queries/orders/models/orderDetailQuery';
-import { mock } from 'jest-mock-extended';
-import DbClient from '../../../persistence/helpers/dbClient';
-import { Db } from "mongodb";
 import GetOrderByIdQuery from '../../../queries/orders/getOrderByIdQuery';
 import OrderNotFoundException from '../../../queries/orders/exceptions/orderNotFoundException';
 import FakeDbClient from '../../helpers/fakeDbClient';
@@ -38,7 +35,6 @@ describe('getOrderByIdQuery', () => {
       .catch((error: OrderNotFoundException) => {
         expect(error.message).toBe("not found");
       });
-
   });
 
 });
