@@ -7,6 +7,8 @@ import * as logger from 'morgan';
 import Routes from './api/routes/interfaces/routes.interface';
 import errorMiddleware from './api/middlewares/error.middleware';
 import DbClient from './persistence/helpers/dbClient';
+import * as swaggerUi from 'swagger-ui-express';
+import Swagger from './swagger';
 
 class App {
   public app: express.Application;
@@ -22,11 +24,12 @@ class App {
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
     this.initializeErrorHandling();
+    this.initializeSwagger();
   }
 
   public listen() {
     this.app.listen(this.port, () => {
-      console.log(`🚀 App listening on the port ${this.port}`);
+      console.log(`🚀 App listening on the port ${this.port.toString()}`);
     });
   }
 
@@ -64,6 +67,14 @@ class App {
     // Connect to MongoDB
     if (this.env) {
       DbClient.connect();
+    }
+  }
+
+  private initializeSwagger() {
+    const swaggerSpec = Swagger.configure(this.port);
+    if (swaggerSpec) {
+      this.app.use('/docs', swaggerUi.serve);
+      this.app.get('/docs', swaggerUi.setup(swaggerSpec));
     }
   }
 

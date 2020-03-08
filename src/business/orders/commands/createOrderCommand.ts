@@ -9,3 +9,5 @@ export interface CreateOrderDetailCommand {
   quantity: number;
   price: number;
 }
+
+export default CreateOrderCommand;
