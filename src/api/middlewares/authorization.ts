@@ -8,6 +8,13 @@ const oktaJwtVerifier = new OktaJwtVerifier({
   clientId: process.env.CLIENT_ID
 })
 
+export function unless(path: string, middleware: any) {
+  return function (req: Request, res: Response, next: NextFunction) {
+    if (req.path.startsWith(path)) return next();
+    return middleware(req, res, next);
+  };
+};
+
 async function authorizationMiddleware(req: Request, res: Response, next: NextFunction) {
   try {
     const { authorization } = req.headers

@@ -7,10 +7,31 @@ class Swagger {
       info: {
         title: 'Orders API',
         version: '1.0.0',
-        description: 'This is the Example API documentation and is using the OpenAPI spec.',
+        description: 'Orders API documentation',
       },
       host: `localhost:${port.toString()}`,
-      basePath: '/'
+      basePath: '/',
+      components: {
+        securitySchemes: {
+          OrdersApiOAuth2: {
+            type: 'oauth2',
+            description: 'This API uses OAuth 2 with the implicit grant flow.',
+            flows: {
+              clientCredentials: {
+                tokenUrl: 'https://dev-697175.okta.com/oauth2/default/v1/token',
+                scopes: {
+                  'orders-api': 'full access'
+                }
+              }
+            }
+          }
+        }
+      }
+      // security: {
+      //   oAuthSample: {
+      //     order-api
+      //   }
+      // }
     };
 
     const path = require('path');

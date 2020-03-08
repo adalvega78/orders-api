@@ -7,6 +7,33 @@ import RequestValidator from '../middlewares/requestValidator';
 
 class OrdersController {
 
+  /**
+ * GET method route
+ * @example http://localhost:PORT/v1/orders/:id
+ *
+ * @swagger
+ * /orders/{id}:
+ *  get:
+ *    description: Get order by orderId
+ *    tags: ["orders"]
+ *    security:
+ *      - bearerAuth: []
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        description: the unique orderId
+ *        required: true
+ *        schema:
+ *          type: string
+ *    responses:
+ *      200:
+ *        description: return order by id
+ *        content:
+ *          application/json:
+ *            schema:
+ *              oneOf:
+ *                - $ref: '#/components/schemas/OrderSchema'
+ */
   public getOrderById = async (req: Request, res: Response, next: NextFunction) => {
     const orderId: string = req.params.id;
     let findOrderById = Factory.FindByOrderId();
@@ -22,6 +49,30 @@ class OrdersController {
       });
   }
 
+/**
+ * POST method route
+ * @example http://localhost:PORT/orders
+ *
+ * @swagger
+ * /orders:
+ *   post:
+ *      description: Create new Order
+ *      tags: ["orders"]
+ *      security:
+ *       - bearerAuth: []
+ *      requestBody:
+ *        description: order creation request body
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/CreateOrderSchema'
+ *      responses:
+ *        201:
+ *          description: return created order id
+ *        default:
+ *          description: unexpected error
+ */
   public createOrder = async (req: Request, res: Response, next: NextFunction) => {
     const createOrderCommand: CreateOrderCommand = req.body;
     try {

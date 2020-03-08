@@ -10,6 +10,7 @@ import DbClient from './persistence/helpers/dbClient';
 import * as swaggerUi from 'swagger-ui-express';
 import Swagger from './swagger';
 import authorizationMiddleware from './api/middlewares/authorization';
+import { unless } from './api/middlewares/authorization';
 
 class App {
   public app: express.Application;
@@ -57,7 +58,7 @@ class App {
 
   private initializeRoutes(routes: Routes[]) {
     routes.forEach((route) => {
-      this.app.use('/', authorizationMiddleware, route.router);
+      this.app.use('/', route.router);
     });
   }
 
@@ -65,15 +66,14 @@ class App {
     this.app.use(errorMiddleware);
   }
 
+
   private initializeAuthorizationHandling() {
-    this.app.use(authorizationMiddleware);
+    this.app.use(unless('/docs/', authorizationMiddleware));
   }
 
   private initializeDatabase() {
     // Connect to MongoDB
-    if (this.env) {
-      DbClient.connect();
-    }
+    DbClient.connect();
   }
 
   private initializeSwagger() {
