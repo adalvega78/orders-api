@@ -9,6 +9,7 @@ import errorMiddleware from './api/middlewares/error.middleware';
 import DbClient from './persistence/helpers/dbClient';
 import * as swaggerUi from 'swagger-ui-express';
 import Swagger from './swagger';
+import authorizationMiddleware from './api/middlewares/authorization';
 
 class App {
   public app: express.Application;
@@ -24,6 +25,7 @@ class App {
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
     this.initializeErrorHandling();
+    this.initializeAuthorizationHandling();
     this.initializeSwagger();
   }
 
@@ -55,12 +57,16 @@ class App {
 
   private initializeRoutes(routes: Routes[]) {
     routes.forEach((route) => {
-      this.app.use('/', route.router);
+      this.app.use('/', authorizationMiddleware, route.router);
     });
   }
 
   private initializeErrorHandling() {
     this.app.use(errorMiddleware);
+  }
+
+  private initializeAuthorizationHandling() {
+    this.app.use(authorizationMiddleware);
   }
 
   private initializeDatabase() {

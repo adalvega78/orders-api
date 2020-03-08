@@ -11,6 +11,7 @@
     "lint": "tslint -p tsconfig.json -c tslint.json"
   },
   "dependencies": {
+    "@okta/jwt-verifier": "^1.0.0",
     "bcrypt": "^4.0.0",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.11.0",
@@ -28,7 +29,8 @@
     "mongodb": "^3.5.4",
     "morgan": "^1.9.1",
     "ts-node": "^8.6.2",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "typescript-rest-swagger": "^1.1.1"
   },
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
