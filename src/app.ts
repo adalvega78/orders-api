@@ -26,7 +26,6 @@ class App {
     this.initializeMiddlewares();
     this.initializeRoutes(routes);
     this.initializeErrorHandling();
-    this.initializeAuthorizationHandling();
     this.initializeSwagger();
   }
 
@@ -45,7 +44,7 @@ class App {
       this.app.use(hpp());
       this.app.use(helmet());
       this.app.use(logger('combined'));
-      this.app.use(cors({ origin: 'your.domain.com', credentials: true }));
+      this.app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
     } else {
       this.app.use(logger('dev'));
       this.app.use(cors({ origin: true, credentials: true }));
@@ -58,17 +57,12 @@ class App {
 
   private initializeRoutes(routes: Routes[]) {
     routes.forEach((route) => {
-      this.app.use('/', route.router);
+      this.app.use(unless('/docs', authorizationMiddleware), route.router);
     });
   }
 
   private initializeErrorHandling() {
     this.app.use(errorMiddleware);
-  }
-
-
-  private initializeAuthorizationHandling() {
-    this.app.use(unless('/docs/', authorizationMiddleware));
   }
 
   private initializeDatabase() {
@@ -79,6 +73,7 @@ class App {
   private initializeSwagger() {
     const swaggerSpec = Swagger.configure(this.port);
     if (swaggerSpec) {
+      const ui = swaggerUi.serve;
       this.app.use('/docs', swaggerUi.serve);
       this.app.get('/docs', swaggerUi.setup(swaggerSpec));
     }
