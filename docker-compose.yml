@@ -1,0 +1,28 @@
+version: "2"
+services:
+  app:
+    container_name: orders-api
+    restart: always
+    build: .
+    ports:
+      - "8080:3000"
+    links:
+      - mongo
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongo:27017
+      - AUTHORIZATION_ISSUER_URI=https://dev-697175.okta.com/oauth2/default
+      - CLIENT_ID=0oa35a16zxMyF9QXk4x6
+      - CLIENT_SECRET=1ZUsLj2hK66pKyx2Irqock0TkaiaL9UQJO1fIBKk
+      - SCOPE=orders-api
+  mongo:
+    container_name: mongo
+    image: "mongo"
+    environment:
+      - MONGO_INITDB_DATABASE=test
+      - MONGO_INITDB_ROOT_USERNAME=mongoUser
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
