@@ -10,7 +10,7 @@ services:
       - mongo
     environment:
       - PORT=3000
-      - MONGODB_URI=mongodb://mongo:27017
+      - MONGODB_URI=mongodb://mongoUser:secret@mongo:27017
       - AUTHORIZATION_ISSUER_URI=https://dev-697175.okta.com/oauth2/default
       - CLIENT_ID=0oa35a16zxMyF9QXk4x6
       - CLIENT_SECRET=1ZUsLj2hK66pKyx2Irqock0TkaiaL9UQJO1fIBKk
@@ -23,6 +23,8 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=mongoUser
       - MONGO_INITDB_ROOT_PASSWORD=secret
     volumes:
-      - ./data:/data/db
+      - mongodb_data_container:/data/db
     ports:
       - "27017:27017"
+volumes:
+  mongodb_data_container:
