@@ -18,6 +18,8 @@ Kubernetes -> minikube
 sudo minikube start
 kubectl apply -f ./kubernetes-orders-api-test.yaml
 
+$ kubectl expose deployment jmeter-grafana --port=3000 --external-ip=$(minikube ip) --type=NodePort
+
 kubectl expose deployment ordres-api-test --type=LoadBalancer --name=my-orders-api
 
 kubectl get services ( externalIP pending )
