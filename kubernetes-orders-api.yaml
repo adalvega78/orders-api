@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: orders-api-test
+  name: orders-api-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: orders-api-test
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: orders-api-test
+    spec:
+      containers:
+      - image: avegaaida/orders-api-test:firsttry
+        name: orders-api-test
+        ports:
+        - containerPort: 3000
+
