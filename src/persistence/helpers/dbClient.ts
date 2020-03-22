@@ -8,19 +8,20 @@ class DbClient {
     this.mongoDbUri = mongoDbUri;
   }
 
-  public connect() {
+  public async connect() {
     let options = <MongoClientOptions>{
       useUnifiedTopology: true,
       useNewUrlParser: true
     };
-    return MongoClient.connect(this.mongoDbUri, options)
-      .then(client => {
-        this.db = client.db("test");
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    try {
+      const client = await MongoClient.connect(this.mongoDbUri, options)
+      this.db = client.db("test");
+    }
+    catch (err) {
+      console.log(err);
+    }
   }
+
 }
 
 export default new DbClient(process.env.MONGODB_URI);
