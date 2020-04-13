@@ -16,6 +16,8 @@ docker-compose down
 Kubernetes -> minikube
 
 sudo minikube start
+sudo minikube addons enable metrics-server
+
 kubectl apply -f ./kubernetes-orders-api-test.yaml
 
 $ kubectl expose deployment jmeter-grafana --port=3000 --external-ip=$(minikube ip) --type=NodePort
