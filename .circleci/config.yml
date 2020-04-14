@@ -22,7 +22,6 @@ jobs:
           command: |
             set -x
             docker-compose up -d
-            docker inspect mongo
 
       - node/with-cache:
           steps:
