@@ -26,3 +26,14 @@ spec:
           requests:
             cpu: "0.25"
             memory: "25Mi"
+        env:
+          - name: MONGODB_URI
+            value: "mongodb+srv://testDbUser:mxnROwuOZ9HpllKD@cluster0-wojvy.mongodb.net/test?retryWrites=true&w=majority"
+          - name: AUTHORIZATION_ISSUER_URI
+            value: "https://dev-697175.okta.com/oauth2/default"
+          - name: CLIENT_ID
+            value: "0oa35a16zxMyF9QXk4x6"
+          - name: CLIENT_SECRET
+            value: "1ZUsLj2hK66pKyx2Irqock0TkaiaL9UQJO1fIBKk"
+          - name: SCOPE
+            value: "orders-api"                               
