@@ -1,4 +1,4 @@
-process.env.MONGODB_URI = 'mongodb+srv://testDbUser:mxnROwuOZ9HpllKD@cluster0-wojvy.mongodb.net/test?retryWrites=true&w=majority'
+process.env.MONGODB_URI = 'mongodb://mongoUser:secret@localhost:27017'
 process.env.AUTHORIZATION_ISSUER_URI = 'https://dev-697175.okta.com/oauth2/default'
 process.env.CLIENT_ID = '0oa35a16zxMyF9QXk4x6'
 process.env.CLIENT_SECRET = '1ZUsLj2hK66pKyx2Irqock0TkaiaL9UQJO1fIBKk'
