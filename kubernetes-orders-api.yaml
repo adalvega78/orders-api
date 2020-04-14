@@ -19,4 +19,10 @@ spec:
         name: orders-api-test
         ports:
         - containerPort: 3000
-
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "125Mi"
+          requests:
+            cpu: "0.25"
+            memory: "25Mi"
