@@ -23,6 +23,17 @@ jobs:
             set -x
             docker-compose up -d
 
+      - run:
+          name: Waiting for MongoDB to be ready
+          command: |
+            for i in `seq 1 30`;
+            do
+              nc -z localhost 27017 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for MongoDB && exit 1            
+
       - node/with-cache:
           steps:
             - run: npm install
