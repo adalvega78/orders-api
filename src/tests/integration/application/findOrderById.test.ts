@@ -1,6 +1,7 @@
 import FindOrderById from '../../../application/orders/useCases/findOrderById';
 import DbClient from '../../../persistence/helpers/dbClient';
 import Order from '../../../queries/orders/models/orderQuery';
+import OrderDetail from '../../../queries/orders/models/orderDetailQuery';
 import OrderNotFoundException from '../../../queries/orders/exceptions/orderNotFoundException';
 import GetOrderByIdQuery from '../../../queries/orders/getOrderByIdQuery';
 
@@ -10,15 +11,25 @@ describe('findOrderById should', () => {
     await DbClient.connect()
   })
 
-  async function getAnExistingOrder(): Promise<Order> {
-    const order = await DbClient.db.collection("orders").findOne({}, { sort: { $natural: -1 } })
+  function getANewOrderWith(orderId: string): Order {
+    return <Order>{
+      id: orderId,
+      customerId: "anyCustomerId",
+      total: 25.34,
+      details: new Array<OrderDetail>()
+    };
+  }
+
+  async function getAnExistingOrderWith(orderId: string): Promise<Order> {
+    const order = getANewOrderWith(orderId);
+    await DbClient.db.collection("orders").insertOne(order)
     return Promise.resolve(order);
   };
 
   it('gets order matching with id', async () => {
     const query = new GetOrderByIdQuery();
     let findOrderById = new FindOrderById(query);
-    let expectedOrder = await getAnExistingOrder();
+    let expectedOrder = await getAnExistingOrderWith("anOrderId");
 
     let order = await findOrderById.execute(expectedOrder.id);
 

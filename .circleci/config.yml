@@ -1,0 +1,26 @@
+version: 2.1
+jobs:
+  build-and-test:
+    docker:
+      - image: circleci/node:12.16.1
+
+      - image: mongo:4.0.18-xenial
+        environment:
+          MONGO_INITDB_DATABASE: test
+          MONGO_INITDB_ROOT_USERNAME: mongoUser
+          MONGO_INITDB_ROOT_PASSWORD: secret      
+        command: [mongod, --smallfiles]
+    steps:
+      - checkout
+      - run:
+          name: Wait for Mongo to start
+          # preinstalled in circleci/* docker image
+          command: dockerize -wait tcp://127.0.0.1:27017 -timeout 120s        
+
+      - run: npm install
+      - run: npm test
+
+workflows:
+    build-and-test:
+      jobs:
+        - build-and-test
