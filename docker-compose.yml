@@ -17,7 +17,7 @@ services:
       - SCOPE=orders-api
   mongo:
     container_name: mongo
-    image: "mongo:4.0.18-xenial"
+    image: "mongo"
     environment:
       - MONGO_INITDB_DATABASE=test
       - MONGO_INITDB_ROOT_USERNAME=mongoUser
