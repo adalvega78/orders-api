@@ -10,7 +10,6 @@ jobs:
           MONGO_INITDB_ROOT_USERNAME: mongoUser
           MONGO_INITDB_ROOT_PASSWORD: secret      
         command: [mongod, --smallfiles]
-    machine: true        
     steps:
       - checkout
       - run:
