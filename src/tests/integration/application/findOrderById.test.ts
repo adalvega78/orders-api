@@ -15,7 +15,7 @@ describe('findOrderById should', () => {
     return <Order>{
       id: orderId,
       customerId: "anyCustomerId",
-      total: 25.34,
+      total: 26.34,
       details: new Array<OrderDetail>()
     };
   }
