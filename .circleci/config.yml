@@ -10,6 +10,7 @@ jobs:
           MONGO_INITDB_ROOT_USERNAME: mongoUser
           MONGO_INITDB_ROOT_PASSWORD: secret      
         command: [mongod, --smallfiles]
+    machine: true        
     steps:
       - checkout
       - run:
@@ -22,9 +23,6 @@ jobs:
 
       - run: npm install
       - run: npm test
-
-      - setup_remote_docker:
-          docker_layer_caching: true
 
       - run:
           name: Build and push Docker image
