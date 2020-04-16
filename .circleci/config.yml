@@ -13,22 +13,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Setup VirtualEnv
-          command: |
-            echo 'export TAG=0.1.${CIRCLE_BUILD_NUM}' >> $BASH_ENV
-      - run:
           name: Wait for Mongo to start
           command: dockerize -wait tcp://127.0.0.1:27017 -timeout 120s        
 
       - run: npm install
       - run: npm test
-
-      - run:
-          name: Build and push Docker image
-          command: |
-            docker build -t avegaaida/orders-api-test:$TAG .
-            echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
-            docker push avegaaida/orders-api-test:$TAG
 
 workflows:
     build-and-test:
