@@ -1,6 +1,9 @@
 version: 2.1
 jobs:
   build-and-test:
+    branches:  
+      only:
+        master
     docker:
       - image: circleci/node:12.16.1
 
@@ -23,8 +26,4 @@ jobs:
 workflows:
     build-and-test:
       jobs:
-        - build-and-test:
-            filters:
-              branches:
-                only:
-                  - master
+        - build-and-test
