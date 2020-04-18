@@ -27,3 +27,5 @@ kubectl expose deployment orders-api-test --type=LoadBalancer --name=my-orders-a
 kubectl get services ( externalIP pending )
 
 sudo minikube tunnel ( to simulate LoadBalancer in minikube )
+
+

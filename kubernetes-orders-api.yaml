@@ -29,6 +29,8 @@ spec:
             cpu: "0.25"
             memory: "25Mi"
         env:
+          - name: PORT
+            value: "3000"
           - name: MONGODB_URI
             value: "mongodb+srv://testDbUser:mxnROwuOZ9HpllKD@cluster0-wojvy.mongodb.net/test?retryWrites=true&w=majority"
           - name: AUTHORIZATION_ISSUER_URI
@@ -39,3 +41,16 @@ spec:
             value: "1ZUsLj2hK66pKyx2Irqock0TkaiaL9UQJO1fIBKk"
           - name: SCOPE
             value: "orders-api"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-orders-api
+  labels:
+    app: my-orders-api
+spec:
+  ports:
+    - port: 3000
+  selector:
+    app.kubernetes.io/name: orders-api-test
+  type: LoadBalancer
