@@ -49,7 +49,7 @@ jobs:
       - kubernetes/create-or-update-resource:
           get-rollout-status: true
           resource-file-path: kubernetes-orders-api.yaml
-          resource-name: my-orders-api
+          resource-name: orders-api-test
           show-kubectl-command: true
 
 workflows:
