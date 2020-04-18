@@ -9,13 +9,15 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: orders-api-test
+      app: orders-api-test
+      tier: frontend
   template:
     metadata:
       labels:
         app.kubernetes.io/name: orders-api-test
     spec:
       containers:
-      - image: avegaaida/orders-api-test:firsttry
+      - image: avegaaida/orders-api-test:@latest
         name: orders-api-test
         ports:
         - containerPort: 3000
@@ -36,4 +38,18 @@ spec:
           - name: CLIENT_SECRET
             value: "1ZUsLj2hK66pKyx2Irqock0TkaiaL9UQJO1fIBKk"
           - name: SCOPE
-            value: "orders-api"                               
+            value: "orders-api"
+---            
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-orders-api
+  labels:
+    app: my-orders-api
+spec:
+  ports:
+    - port: 3000
+  selector:
+      app: orders-api-test
+      tier: frontend
+  type: LoadBalancer            
