@@ -14,8 +14,10 @@ spec:
       labels:
         app.kubernetes.io/name: orders-api-test
     spec:
+      imagePullSecrets:
+      - name: "regcred"      
       containers:
-      - image: avegaaida/orders-api-test:latest
+      - image: avegaaida/orders-api-test
         name: orders-api-test
         ports:
         - containerPort: 3000
