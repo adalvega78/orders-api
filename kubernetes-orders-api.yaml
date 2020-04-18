@@ -53,4 +53,20 @@ spec:
     - port: 3000
   selector:
     app.kubernetes.io/name: orders-api-test
-  type: LoadBalancer
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: my-orders-api
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
+spec:
+  rules:
+  - host: my-orders-api.d2e77c3c873f4da0b8d7.eastus.aksapp.io
+    http:
+      paths:
+      - backend:
+          serviceName: my-orders-api
+          servicePort: 3000
+        path: /  

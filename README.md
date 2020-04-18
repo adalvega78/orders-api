@@ -28,4 +28,9 @@ kubectl get services ( externalIP pending )
 
 sudo minikube tunnel ( to simulate LoadBalancer in minikube )
 
+-->
+Separar los yaml
+->
+url donde está el servicio CD
 
+http://my-orders-api.d2e77c3c873f4da0b8d7.eastus.aksapp.io/docs/ 
