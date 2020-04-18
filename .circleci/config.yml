@@ -1,4 +1,5 @@
 version: 2.1
+
 orbs:
   azure-aks: circleci/azure-aks@0.2.1
   kubernetes: circleci/kubernetes@0.4.0
@@ -36,17 +37,16 @@ jobs:
             echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
             docker push avegaaida/orders-api-test:$TAG
 
-  deploy: 
-    docker:
-      - image: 'cimg/base:stable'
+  deploy:
+    executor: azure-aks/default
     steps:
       - checkout
       - azure-aks/update-kubeconfig-with-credentials:
           cluster-name: k8s-test
+          resource-group: k8s-test
           install-kubectl: true
           perform-login: true
-          resource-group: k8s-test      
-      - kube-orb/create-or-update-resource:
+      - kubernetes/create-or-update-resource:
           get-rollout-status: true
           resource-file-path: kubernetes-orders-api.yaml
           resource-name: my-orders-api
