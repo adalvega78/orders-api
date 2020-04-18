@@ -9,8 +9,6 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: orders-api-test
-      app: orders-api-test
-      tier: frontend
   template:
     metadata:
       labels:
@@ -39,7 +37,7 @@ spec:
             value: "1ZUsLj2hK66pKyx2Irqock0TkaiaL9UQJO1fIBKk"
           - name: SCOPE
             value: "orders-api"
----            
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -50,6 +48,5 @@ spec:
   ports:
     - port: 3000
   selector:
-      app: orders-api-test
-      tier: frontend
-  type: LoadBalancer            
+    app.kubernetes.io/name: orders-api-test
+  type: LoadBalancer
