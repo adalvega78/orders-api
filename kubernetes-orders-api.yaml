@@ -15,7 +15,7 @@ spec:
         app.kubernetes.io/name: orders-api-test
     spec:
       containers:
-      - image: avegaaida/orders-api-test:@latest
+      - image: avegaaida/orders-api-test:latest
         name: orders-api-test
         ports:
         - containerPort: 3000
