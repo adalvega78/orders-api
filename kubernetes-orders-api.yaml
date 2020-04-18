@@ -37,16 +37,3 @@ spec:
             value: "1ZUsLj2hK66pKyx2Irqock0TkaiaL9UQJO1fIBKk"
           - name: SCOPE
             value: "orders-api"
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: my-orders-api
-  labels:
-    app: my-orders-api
-spec:
-  ports:
-    - port: 3000
-  selector:
-    app.kubernetes.io/name: orders-api-test
-  type: LoadBalancer
