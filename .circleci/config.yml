@@ -36,7 +36,7 @@ jobs:
             docker build -t avegaaida/orders-api-test:$TAG .
             echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
             docker tag avegaaida/orders-api-test:$TAG avegaaida/orders-api-test:latest
-            docker push avegaaida/orders-api-test:latest
+            docker push avegaaida/orders-api-test:$TAG
   deploy:
     executor: azure-aks/default
     steps:
