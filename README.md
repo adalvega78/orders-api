@@ -34,3 +34,7 @@ Separar los yaml
 url donde está el servicio CD
 
 http://my-orders-api.d2e77c3c873f4da0b8d7.eastus.aksapp.io/docs/ 
+
+
+Token
+https://dev-697175.okta.com/oauth2/default/v1/token

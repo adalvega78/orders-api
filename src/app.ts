@@ -49,7 +49,7 @@ class App {
       this.app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
     } else {
       this.app.use(logger('dev'));
-      this.app.use(cors({ origin: true, credentials: true }));
+      this.app.use(cors({ origin: false, credentials: true }));
     }
 
     this.app.use(express.json());
@@ -75,8 +75,18 @@ class App {
   private initializeSwagger() {
     const swaggerSpec = Swagger.configure(this.port);
     if (swaggerSpec) {
+      const swaggerUiOptions = {
+        customSiteTitle: 'Orders Api Docs',
+        swaggerOptions: {
+          oauth: {
+            clientId: "my-client-id",
+            clientSecret: "my-client-secret",
+            usePkceWithAuthorizationCodeGrant: true
+          }
+        }
+      };
       this.app.use(this.DocumentationRoute, swaggerUi.serve);
-      this.app.get(this.DocumentationRoute, swaggerUi.setup(swaggerSpec));
+      this.app.get(this.DocumentationRoute, swaggerUi.setup(swaggerSpec, swaggerUiOptions));
     }
   }
 

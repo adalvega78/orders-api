@@ -27,11 +27,6 @@ class Swagger {
           }
         }
       }
-      // security: {
-      //   oAuthSample: {
-      //     order-api
-      //   }
-      // }
     };
 
     const path = require('path');
