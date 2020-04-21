@@ -26,14 +26,21 @@ describe('findOrderById should', () => {
     return Promise.resolve(order);
   };
 
+  async function cleanExistingOrder(orderId: string) {
+    await DbClient.db.collection("orders").deleteOne({ id: orderId})
+  }
+
   it('gets order matching with id', async () => {
     const query = new GetOrderByIdQuery();
     let findOrderById = new FindOrderById(query);
-    let expectedOrder = await getAnExistingOrderWith("anOrderId");
+    const existingOrderId = "anExistingOrderId";
+    let expectedOrder = await getAnExistingOrderWith(existingOrderId);
 
     let order = await findOrderById.execute(expectedOrder.id);
 
     expect(order).toMatchObject(expectedOrder);
+
+    await cleanExistingOrder(existingOrderId);
   });
 
   it('throws an exception when orderid not exists', async () => {
