@@ -17,6 +17,8 @@ class App {
   public port: (string | number);
   public env: boolean;
 
+  private readonly DocumentationRoute = '/docs';
+
   constructor(routes: Routes[]) {
     this.app = express();
     this.port = process.env.PORT || 3000;
@@ -47,7 +49,7 @@ class App {
       this.app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
     } else {
       this.app.use(logger('dev'));
-      this.app.use(cors({ origin: true, credentials: true }));
+      this.app.use(cors({ origin: false, credentials: true }));
     }
 
     this.app.use(express.json());
@@ -57,7 +59,7 @@ class App {
 
   private initializeRoutes(routes: Routes[]) {
     routes.forEach((route) => {
-      this.app.use(unless('/docs', authorizationMiddleware), route.router);
+      this.app.use(unless(this.DocumentationRoute, authorizationMiddleware), route.router);
     });
   }
 
@@ -73,9 +75,18 @@ class App {
   private initializeSwagger() {
     const swaggerSpec = Swagger.configure(this.port);
     if (swaggerSpec) {
-      const ui = swaggerUi.serve;
-      this.app.use('/docs', swaggerUi.serve);
-      this.app.get('/docs', swaggerUi.setup(swaggerSpec));
+      const swaggerUiOptions = {
+        customSiteTitle: 'Orders Api Docs',
+        swaggerOptions: {
+          oauth: {
+            clientId: "my-client-id",
+            clientSecret: "my-client-secret",
+            usePkceWithAuthorizationCodeGrant: true
+          }
+        }
+      };
+      this.app.use(this.DocumentationRoute, swaggerUi.serve);
+      this.app.get(this.DocumentationRoute, swaggerUi.setup(swaggerSpec, swaggerUiOptions));
     }
   }
 
