@@ -11,7 +11,7 @@ _These instructions allow you to have the project running in your local machine 
 Clone this repository
 
 The repository is structured in the next folders
-* **.circleci** - contains CircleCI CI and CD yaml
+* **.circleci** - contains CircleCI Continuous Integration and Continuous Deployment yaml
 * **src**
     * **api**   - contains API code
     * **application** - contains the code of use cases
@@ -28,8 +28,12 @@ The entrypoint is the file ***src/server.ts***
 _What do you need installed previously and how_
 - [Node.js v12.16.1 LTS or later](https://nodejs.org/es/)
 - [Yarn](https://classic.yarnpkg.com/en/docs/install/#windows-stable)
-- [Docker](https://www.docker.com/products/docker-desktop)
-- [Docker-Compose](https://docs.docker.com/compose/install/)
+- [Docker](https://www.docker.com/products/docker-desktop) optional
+- [Docker-Compose](https://docs.docker.com/compose/install/) optional
+- [Minikube](https://kubernetes.io/es/docs/tasks/tools/install-minikube/) optional
+- [Apache JMeter](http://jmeter.apache.org/download_jmeter.cgi) for loading tests
+- [MongoDB Atlas](https://cloud.mongodb.com/v2/5e54fbad6c2a64558dcfbc81#clusters) for production database
+
 
 If you prefer **NPM** as package manager you can ignore the ***Yarn*** installation.
 
@@ -69,15 +73,30 @@ Finally, starts the API
 ```bash
 npm start
 or
-npm run dev -- hot reloading
+npm run dev # for hot reloading
 ```
 
 By default the API is listening in the port 3000. You can configure it in the file **.env** placed in the root folder.
+
+The API is authenticated with OAuth2 flow using [Okta](https://www.okta.com/) as authorization's token provider.
+
+In order to obtain a valid token you can use Postman or similar program to require a token specifying the next client credentials
+
+* Access token url: https://dev-697175.okta.com/oauth2/default/v1/token
+* ClientID: **0oa35a16zxMyF9QXk4x6**
+* ClientSecret: **1ZUsLj2hK66pKyx2Irqock0TkaiaL9UQJO1fIBKk**
+* Scope: **orders-api**
+* Grant Type: **Client Credentials**
+
+You can find attached an example using Postman
+
+![Authorization](images/authorization%20credentials.PNG)
 
 ## Running the tests ⚙️
 
 _How run the tests_
 
+### Unit and Integration tests
 The tests are placed inside the folder **src/tests**
 
 For run them execute the command
@@ -85,7 +104,14 @@ For run them execute the command
 ```bash
 npm run test
 ```
+### Loading tests
+Additionally, exists a **JMeter** project containing API **loading tests**. To run it, open the JMeter IDE executing bin/jmeter.bat inside the jmeter installation folder.
+After that, open the file **src/tests/LoadTests.jmx**, configure the **ServerName or IP** and **Port** for the Http Requests **Get Order** and **Create Order** if it is necessary and finally, execute it.
 
+You can run the tests from command line too executing
+```bash
+jmeter -n -t src/tests/LoadTests.jmx -l /path/to/results/file.jtl
+```
 ## Deployment 📦
 
 _Add additional notes about the deployment_
@@ -94,70 +120,86 @@ The Orders API Continuous Integration is running in CircleCI [![CircleCI](https:
 
 Additionally, when the CI finish successfully, the API have configured Continuous Deployment on Azure Kubernetes Services, accessible in the uri [Azure Orders API](http://my-orders-api.d2e77c3c873f4da0b8d7.eastus.aksapp.io/docs/)
 
-On the other hand
-
 You can find the pipeline inside the folder **.circleci**
 
-DockerFile
+### Docker
+For build manually the API image and container without use docker-compose you can execute the next commands
 
+```bash
 docker build . -t orders-api
-docker run --name=orders-api-instance -p 8080:3000 orders-api
+docker run --name=orders-api-instance -p 8080:3000 orders-api -d
+```
+After that the API should be exposed in the uri [http://localhost:8080](http://localhost:8080).
 
-DockerCompose
+In this case, MongoDB container is not configured, so you must configure the environment variable **MONGODB_URI** 
+to connect with MongoDB Cloud database.
 
-docker-compose up -d 
+A command example is
 
-docker-compose down
+```bash
+docker run --name=orders-api-instance -p 8080:3000 -e "MONGODB_URI=mongodb+srv://testDbUser:mxnROwuOZ9HpllKD@cluster0-wojvy.mongodb.net/test?retryWrites=true&w=majority" orders-api -d 
+```
 
-Kubernetes -> minikube
+### Docker-Compose
+You can run a full devops stack with API and MongoDB containers running then commands
 
-sudo minikube start
-sudo minikube addons enable metrics-server
+```bash
+docker-compose up -d # start the containers
 
-kubectl apply -f ./kubernetes-orders-api-test.yaml
+docker-compose down # stop the containers
+```
+### Kubernetes (Minikube)
+Additionally you can deploy the API in a kubernetes cluster.
 
-$ kubectl expose deployment jmeter-grafana --port=3000 --external-ip=$(minikube ip) --type=NodePort
+For simulate the cluster in a local machine you can use minikube.
 
-kubectl expose deployment orders-api-test --type=LoadBalancer --name=my-orders-api
+```bash
+minikube start
+# activate the metrics
+minikube addons enable metrics-server
+# create deployment, pod and service
+kubectl apply -f ./minikube-orders-api-test.yaml
 
-kubectl get services ( externalIP pending )
+# get services running in cluster and default namespace
+kubectl get services # externalIP pending
 
-sudo minikube tunnel ( to simulate LoadBalancer in minikube )
+# to expose service in local machine and obtain a valid external IP
+# we have configured the LoadBalancer type but minikube not support it
+# You can simulate this behaviour executing the command
+minikube tunnel
+```
 
--->
-Separar los yaml
-->
-url donde está el servicio CD
+If kubectl can not pulling the images from private repository, we must configure the credentials for kubectl running the command
 
-http://my-orders-api.d2e77c3c873f4da0b8d7.eastus.aksapp.io/docs/ 
+```bash
+kubectl create secret generic regcred \
+    --from-file=.dockerconfigjson=<path/to/.docker/config.json> \
+    --type=kubernetes.io/dockerconfigjson
+```
+If the **.docker/config.json** not exists, run the command
+```bash
+docker login
+```
+to create it.
 
+## Other considerations :blush:
+The API is auto documented with **Swagger** and the documentation endpoint is exposed in **/docs** route. For example
+```
+http://localhost:3000/docs
+```
+The OAuth2 acces token flow is configured, but swagger-ui-express is ignoring [**usePkceWithAuthorizationCodeGrant**](https://github.com/swagger-api/swagger-ui/blob/master/docs/usage/oauth2.md) setting, adding *Origin* header in the request, so Okta provider is returning an error related with *Proof Key for Code Exchange*.
 
-Token
-https://dev-697175.okta.com/oauth2/default/v1/token
-
+You can find a Postman collection with valid API requests inside the **examples** folder in the repository root path.
 
 ## Build with 🛠️
+_Tooling used to create the project_
 
-_Menciona las herramientas que utilizaste para crear tu proyecto_
-
-* [AspNetCore 3.1](https://docs.microsoft.com/es-es/aspnet/core/?view=aspnetcore-3.1) - El framework web usado
-* [NuGet](https://www.nuget.org/) - Manejador de dependencias
+* [Visual Studio Code](https://code.visualstudio.com/) - IDE
+* [Yarn](https://classic.yarnpkg.com/en/docs/install/#windows-stable) - Dependences manager
 
 ## Contributing 🖇️
+To contribute, please create a new branch from `master` origin and later, create a pull request in order to merge the new branch to  `master` again.
 
-Para contribuir, deberás sacar una nueva rama de `master` para hacer tus cambios y posteriormente una Pull Request de esa rama hacia `master`. El equipo **Cross Cutting** tratará de revisarla en cuanto le sea posible.
+- In the folder [SequenceDiagrams](./SequenceDiagrams) you can find sequence diagrams showing the code organization and relationships.
 
-- En la carpeta [SequenceDiagrams](./SequenceDiagrams) podrás encontrar diagramas de flujo para entender internamente la organización del código.
-
-## Versioned 📌
-
-Usamos [SemVer](http://semver.org/) para el versionado. En el [CHANGELOG.md](./CHANGELOG.md) podrás ver las distintas versiones así como sus changelogs.
-
-## Expresiones de Gratitud 🎁
-
-* Comenta a otros sobre este proyecto 📢
-* Invita una cerveza 🍺 o un café ☕ a alguien del equipo. 
-* etc.
-
-
-Template de README.md ❤️ por [Villanuevand](https://gist.github.com/Villanuevand/6386899f70346d4580c723232524d35a) 😊
+Template de README.md ❤️ by [Villanuevand](https://gist.github.com/Villanuevand/6386899f70346d4580c723232524d35a) 😊
