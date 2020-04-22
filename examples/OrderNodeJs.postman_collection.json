@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "0657e05d-966a-4c1d-99fc-30a207d8f53b",
+		"name": "OrderNodeJs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Order",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJ4TGIySWlWUXlsQTJfWlowVDVZeTJvRDB2UzB2UmFGaWJGWUhfMGlsWWRZIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULjNYbjVQSzdubUJuZHFSOWpQODVHbktaMTNLNjRwZWtSOHB5QVZrbkJXZnciLCJpc3MiOiJodHRwczovL2Rldi02OTcxNzUub2t0YS5jb20vb2F1dGgyL2RlZmF1bHQiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNTg3NTMzNDIxLCJleHAiOjE1ODc1MzcwMjEsImNpZCI6IjBvYTM1YTE2enhNeUY5UVhrNHg2Iiwic2NwIjpbIm9yZGVycy1hcGkiXSwic3ViIjoiMG9hMzVhMTZ6eE15RjlRWGs0eDYifQ.S9Tvy9UyppkrpQI6ApLS1Wncgmyo5zZLiqTU22DnW3_VC8ekuP3-XltUxROCiPxonThjX0P2lLWzDRLEM6tK-GP13_OarwOL8rL7LWhTviluo9jnRV6cMrogl2jcxECjA0hM_MZcNB1pNjuy4eAMb3GXG1QqeyRElEuMh1mAzFaQG8nfFSL84BTb21XBPtgymhEod-SYNffpaxGXyuW7n4eX1mdjiQzhLZNZm6mRPFqn3T6BSt5ARGxLa-Tgv9ZZcgANKSGBN7hqvVj-gEsZpB1hfbMxOZMzq7BlPtK8AM4CivjXI8xB9R4NaKPD1MZ61NWuXm8OMF9jS8OG6JODMA",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "pepe",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://my-orders-api.d2e77c3c873f4da0b8d7.eastus.aksapp.io/orders/d07ded43-8677-4e2a-a381-b9fad28a20a8",
+					"protocol": "http",
+					"host": [
+						"my-orders-api",
+						"d2e77c3c873f4da0b8d7",
+						"eastus",
+						"aksapp",
+						"io"
+					],
+					"path": [
+						"orders",
+						"d07ded43-8677-4e2a-a381-b9fad28a20a8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Order",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "accessToken",
+							"value": "eyJraWQiOiJ4TGIySWlWUXlsQTJfWlowVDVZeTJvRDB2UzB2UmFGaWJGWUhfMGlsWWRZIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULktWTzdRVnpVTVI5TnJOVE9VVFVIWm1xcEltd1d0OUVPMFlURGdsdk03LUEiLCJpc3MiOiJodHRwczovL2Rldi02OTcxNzUub2t0YS5jb20vb2F1dGgyL2RlZmF1bHQiLCJhdWQiOiJhcGk6Ly9kZWZhdWx0IiwiaWF0IjoxNTg3NTMyNzMxLCJleHAiOjE1ODc1MzYzMzEsImNpZCI6IjBvYTM1YTE2enhNeUY5UVhrNHg2Iiwic2NwIjpbIm9yZGVycy1hcGkiXSwic3ViIjoiMG9hMzVhMTZ6eE15RjlRWGs0eDYifQ.Y6IBapETnO2f6jeF8zbBzCuiBhzg_p6l8sS1ltvQxXmyM5kYjHHiEVYzQjRV88Eiy0ot-kbd9f4ihfsk0Ks43e7QhCwqZ1pOpZCDsgOiJE8M53z2OpaFZucxd2Iw1kRDWW_ghlJzyZQHrBgAcOksZihRtP-wrXDpQcoKwidaaej4Aib2J-2q6xSKOpF6uXh7shWRj9CERHn_Hvo0eyR-d4dzhqhlsVpw4zUjvMy-KhYFA9LGzh81Chpw1WACqHvlxzyj9yRFhsngx8ZwFPER7UB6ohxsEz_hsjI5ybwNjfbBeOyjfWpcfJWlCR7-A6aEhpDeQO17khQ3yh9ZDaTCgA",
+							"type": "string"
+						},
+						{
+							"key": "tokenType",
+							"value": "Bearer",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"customerId\": \"aCustomerId\",\n\t\"details\": [ \n\t{\n\t\t\"productId\": \"firstProduct\",\n\t\t\"quantity\": 1,\n\t\t\"price\": 15\n\t},\n\t{\n\t\t\"productId\": \"secondProduct\",\n\t\t\"quantity\": 1,\n\t\t\"price\": 10.45\n\t}\n\t],\n\t\"total\": 25.45\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://my-orders-api.d2e77c3c873f4da0b8d7.eastus.aksapp.io/orders",
+					"protocol": "http",
+					"host": [
+						"my-orders-api",
+						"d2e77c3c873f4da0b8d7",
+						"eastus",
+						"aksapp",
+						"io"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

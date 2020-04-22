@@ -20,8 +20,10 @@ The repository is structured in the next folders
     * **queries** - contains the readmodel queries
     * **tests** - contains tests
     * **utils** - contains helpers
+* **examples** - contains Postman collection with API requests examples
+* **images** - contains the images used in this document
 
-The entrypoint is the file ***src/server.ts***
+The project entrypoint is the file ***src/server.ts***
 
 ### Pre-requisites 📋
 
@@ -32,7 +34,7 @@ _What do you need installed previously and how_
 - [Docker-Compose](https://docs.docker.com/compose/install/) optional
 - [Minikube](https://kubernetes.io/es/docs/tasks/tools/install-minikube/) optional
 - [Apache JMeter](http://jmeter.apache.org/download_jmeter.cgi) for loading tests
-- [MongoDB Atlas](https://cloud.mongodb.com/v2/5e54fbad6c2a64558dcfbc81#clusters) for production database
+- [MongoDB Atlas](https://cloud.mongodb.com/v2/5e54fbad6c2a64558dcfbc81#clusters) Cloud MongoDB service for "production" database
 
 
 If you prefer **NPM** as package manager you can ignore the ***Yarn*** installation.
@@ -65,6 +67,7 @@ Open a console, move to the repository root folder and run the command
 
 ```bash
 yarn install
+# or
 npm install
 ```
 
@@ -72,7 +75,7 @@ Finally, starts the API
 
 ```bash
 npm start
-or
+# or
 npm run dev # for hot reloading
 ```
 
@@ -191,6 +194,8 @@ The OAuth2 acces token flow is configured, but swagger-ui-express is ignoring [*
 
 You can find a Postman collection with valid API requests inside the **examples** folder in the repository root path.
 
+For real production environment, we must configure Kubernetes Ingress service with Let´s Encrypt certificate generation exposing the API as HTTPS.
+
 ## Build with 🛠️
 _Tooling used to create the project_
 
@@ -200,6 +205,6 @@ _Tooling used to create the project_
 ## Contributing 🖇️
 To contribute, please create a new branch from `master` origin and later, create a pull request in order to merge the new branch to  `master` again.
 
-- In the folder [SequenceDiagrams](./SequenceDiagrams) you can find sequence diagrams showing the code organization and relationships.
+- In the folder [sequenceDiagrams](./sequenceDiagrams) you can find sequence diagrams showing the code organization and relationships.
 
 Template de README.md ❤️ by [Villanuevand](https://gist.github.com/Villanuevand/6386899f70346d4580c723232524d35a) 😊

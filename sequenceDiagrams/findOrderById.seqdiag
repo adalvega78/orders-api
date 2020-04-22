@@ -1,0 +1,10 @@
+Title: Find Order by OrderId
+Client->Orders.Controller:httpGet endpoint /orders/{orderId}
+Orders.Controller->FindOrderById:execute(orderId)
+FindOrderById->GetOrderById:execute(orderId)
+GetOrderById-->FindOrderById:Promise<OrderQuery>
+FindOrderById-->Orders.Controller:Promise<OrderQuery>
+Orders.Controller-->Client:{ data: OrderQuery, message: 'findOne' }
+Note over Orders.Controller: controller
+Note over FindOrderById: application (use case)
+Note over GetOrderById: query

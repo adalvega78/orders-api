@@ -1,0 +1,14 @@
+Title: Place Order
+Client->Orders.Controller:httpPost endpoint /orders
+Orders.Controller->PlaceOrder:execute(createOrderCommand)
+PlaceOrder->CreateOrderCommandHandler:execute(createOrderCommand)
+CreateOrderCommandHandler->Orders:create(createOrderCommand)
+Orders-->CreateOrderCommandHandler:order
+CreateOrderCommandHandler->OrderRepository:save(order)
+CreateOrderCommandHandler-->PlaceOrder:orderId
+PlaceOrder-->Orders.Controller:orderId
+Orders.Controller-->Client:{ data: orderId, message: 'created' }
+Note over Orders.Controller: controller
+Note over PlaceOrder: application (use case)
+Note over CreateOrderCommandHandler, Orders: business 
+Note over OrderRepository: persistence
