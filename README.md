@@ -194,7 +194,7 @@ The OAuth2 acces token flow is configured, but swagger-ui-express is ignoring [*
 
 You can find a Postman collection with valid API requests inside the **examples** folder in the repository root path.
 
-For real production environment, we must configure Kubernetes Ingress service with Let´s Encrypt certificate generation exposing the API as HTTPS.
+For real production environment, we must configure Kubernetes Ingress service with Let´s Encrypt certificate generation exposing the API in secure protocol HTTPS.
 
 ## Build with 🛠️
 _Tooling used to create the project_
@@ -205,6 +205,13 @@ _Tooling used to create the project_
 ## Contributing 🖇️
 To contribute, please create a new branch from `master` origin and later, create a pull request in order to merge the new branch to  `master` again.
 
-- In the folder [sequenceDiagrams](./sequenceDiagrams) you can find sequence diagrams showing the code organization and relationships.
+- In the folder [sequenceDiagrams](./sequenceDiagrams) you can find the source of the next sequence diagrams showing the code organization and relationships.
+
+##### FindOrderById
+
+![FindOrderById](images/findOrderByIdSequenceDiagram.PNG)
+
+##### PlaceOrder
+![PlaceOrder](images/placeOrderSequenceDiagram.PNG)
 
 Template de README.md ❤️ by [Villanuevand](https://gist.github.com/Villanuevand/6386899f70346d4580c723232524d35a) 😊
