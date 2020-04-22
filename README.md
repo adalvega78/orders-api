@@ -121,9 +121,14 @@ _Add additional notes about the deployment_
 
 The Orders API Continuous Integration is running in CircleCI [![CircleCI](https://circleci.com/gh/adalvega78/orders-api.svg?style=svg&circle-token=8e739bcf6affc98f4982f1896da2740635858424)](https://circleci.com/gh/adalvega78/orders-api) triggered on each push to master branch.
 
-The CI process build a docker image of the API and finally, publish it in the docker hub repository
+The CI process build an Orders API docker image and finally, publish it to the [docker hub repository ](https://hub.docker.com/r/avegaaida/orders-api-test)
 
-Additionally, when the CI finish successfully, the API have configured Continuous Deployment on Azure Kubernetes Services, accessible in the uri [Azure Orders API](http://my-orders-api.d2e77c3c873f4da0b8d7.eastus.aksapp.io/docs/)
+Other option to get the image is running the command
+```bash
+docker pull avegaaida/orders-api-test:latest
+```
+
+Additionally, when the CI finish successfully, the deployment stage is triggered and the API is deployed on Azure Kubernetes Services, reachable at the uri [Azure Orders API](http://my-orders-api.d2e77c3c873f4da0b8d7.eastus.aksapp.io/docs/)
 
 You can find the pipeline inside the folder **.circleci**
 
@@ -142,7 +147,7 @@ to connect with MongoDB Cloud database.
 A command example is
 
 ```bash
-docker run --name=orders-api-instance -p 8080:3000 -e "MONGODB_URI=mongodb+srv://testDbUser:mxnROwuOZ9HpllKD@cluster0-wojvy.mongodb.net/test?retryWrites=true&w=majority" orders-api -d 
+docker run --name=orders-api-instance -p 8080:3000 -e "MONGODB_URI=mongodb+srv://databaseUser:LV7CZZpEEZkYWi9L@cluster0-wojvy.mongodb.net/test?retryWrites=true&w=majority" orders-api -d 
 ```
 
 ### Docker-Compose
