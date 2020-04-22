@@ -121,6 +121,8 @@ _Add additional notes about the deployment_
 
 The Orders API Continuous Integration is running in CircleCI [![CircleCI](https://circleci.com/gh/adalvega78/orders-api.svg?style=svg&circle-token=8e739bcf6affc98f4982f1896da2740635858424)](https://circleci.com/gh/adalvega78/orders-api) triggered on each push to master branch.
 
+The CI process build a docker image of the API and finally, publish it in the docker hub repository
+
 Additionally, when the CI finish successfully, the API have configured Continuous Deployment on Azure Kubernetes Services, accessible in the uri [Azure Orders API](http://my-orders-api.d2e77c3c873f4da0b8d7.eastus.aksapp.io/docs/)
 
 You can find the pipeline inside the folder **.circleci**
